@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>login</title>
+    <title>reg</title>
     <script src="js/jquery.min.js"></script>
     <style>
         th, td {
@@ -16,7 +16,7 @@
 </head>
 <body>
     <fieldset style="margin: 10% auto;text-align: center;width: 30%; height: 50%;">
-        <legend style="text-align: center;">登录</legend>
+        <legend style="text-align: center;">注册</legend>
         <table style="border: black solid 1px;margin: 10% auto;">
             <tbody>
                 <tr>
@@ -52,7 +52,7 @@
             url:"reg.do",
             data: {"username": $('#username').val(), "password": $('#password').val()},
             dataType: "json",
-            contentType: "application/json; charset=utf-8",
+            //contentType: "application/json; charset=utf-8",
             success:function(data) {
                 if(data.code === 1){
                     alert('注册成功');
