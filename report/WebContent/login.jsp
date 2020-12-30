@@ -16,7 +16,7 @@
 </head>
 <body>
     <fieldset style="margin: 10% auto;text-align: center;width: 30%; height: 50%;">
-        <legend style="text-align: center;">注册</legend>
+        <legend style="text-align: center;">登录</legend>
         <table style="border: black solid 1px;margin: 10% auto;">
             <tbody>
                 <tr>
@@ -52,7 +52,7 @@
             url:"login.do",
             data: {"username": $('#username').val(), "password": $('#password').val()},
             dataType: "json",
-            contentType: "application/json; charset=utf-8",
+            //contentType: "application/json; charset=utf-8",
             success:function(data) {
                 if(data.code === 1){
                     alert('登录成功');
