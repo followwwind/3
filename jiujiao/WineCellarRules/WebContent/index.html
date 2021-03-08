@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Cellar</title>
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css" />
+<script src="js/jquery-3.4.1.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+</head>
+
+<body>
+<div ng-controller="CourseController" class="wrapper-md">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+          <h3 class="panel-title">Query Condition</h3>
+      </div>
+      <div class="panel-body">
+          <div class="row col-md-12">
+            <form class="form-inline">
+              <div class="form-group">
+                <label for="">name:</label>
+                <input type="text" class="form-control"  placeholder="" id="name">
+              </div>
+              <!-- <div class="form-group">
+                <label for="">Email</label>
+                <input type="email" class="form-control"  placeholder="">
+              </div> -->
+              <button type="button" class="btn btn-success" onclick="search()">Search</button>
+            </form>
+          </div>
+      </div>
+  </div>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Data List</h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+          <div class="col-md-3" ng-show="sysUser.type != 1">
+            <button class="btn btn-success" onclick="add()">Add</button>
+          </div>
+      </div>
+      <div class="row">
+        <div class="table-responsive">
+            <table class="table table-striped m-b-none" id="tbl">
+              <thead>
+              <tr>
+                <th class="text-center">
+                  <label class="i-checks m-b-none">
+                    <input type="checkbox" id="chkAll"><i></i>
+                  </label>
+                </th>
+                <!-- <th class="text-center">id</th> -->
+                <th class="text-center">name</th>
+                <th class="text-center">year</th>
+                <th class="text-center">grapes</th>
+                <th class="text-center">country</th>
+                <th class="text-center">region</th>
+                <th class="text-center">createTime</th>
+                <th class="text-center">Operate</th>
+              </tr>
+              </thead>
+              <tbody class="text-center">
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">Add/Edit</h4>
+              </div>
+              <div class="modal-body">
+                  <form class="form-horizontal" id="addForm">
+                      <!-- <div class="form-group">
+                          <label class="col-sm-2 control-label">id:</label>
+                          <div class="col-sm-10">
+                              <input type="text" class="form-control" placeholder="" ng-model="form.id" id="id">
+                          </div>
+                      </div> -->
+                      <div class="form-group">
+                          <label class="col-sm-2 control-label">name:</label>
+                          <div class="col-sm-10">
+                              <input type="text" class="form-control" placeholder="" ng-model="form.name" id="name">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="col-sm-2 control-label">year:</label>
+                          <div class="col-sm-10">
+                              <input type="text" class="form-control" placeholder="" ng-model="form.year" id="year">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="col-sm-2 control-label">grapes:</label>
+                          <div class="col-sm-10">
+                              <input type="text" class="form-control" placeholder="" ng-model="form.grapes" id="grapes">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="col-sm-2 control-label">country:</label>
+                          <div class="col-sm-10">
+                              <input type="text" class="form-control" placeholder="" ng-model="form.country" id="country">
+                          </div>
+                      </div>
+                      <div class="form-group" >
+                          <label class="col-sm-2 control-label">region:</label>
+                          <div class="col-sm-10">
+                              <input type="text" class="form-control" placeholder="" ng-model="form.region" id="region">
+                          </div>
+                      </div>
+             
+                    </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="save()">Submit</button>
+              </div>
+          </div><!-- /.modal-content -->
+      </div><!-- /.modal -->
+  </div>
+</div>
+
+
+</body>
+</html>
