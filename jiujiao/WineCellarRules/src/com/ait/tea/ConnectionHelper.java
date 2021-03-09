@@ -16,9 +16,9 @@ public class ConnectionHelper
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 //			url = "jdbc:mysql://localhost/winedb?user=root";
-			url = "jdbc:mysql://localhost:3306/winedb?user=root&password=123456&serverTimeZone=UTC&useSSL=false";
+			url = "jdbc:mysql://localhost:3306/winedb?user=root&password=123456&serverTimezone=UTC&useSSL=false";
           //  driver="com.mysql.jdbc.Driver";
-			//driver="com.mysql.cj.jdbc.Driver";
+			driver="com.mysql.cj.jdbc.Driver";
             Class.forName(driver);
             connection=DriverManager.getConnection(url);
             return connection;
