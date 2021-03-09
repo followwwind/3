@@ -41,7 +41,7 @@ public class TeaDAO {
     public List<Tea> findByName(String name) {
         List<Tea> list = new ArrayList<Tea>();
         Connection connection = null;
-    	String sql = "SELECT * FROM tea where name like concat ('%', " + name + ", '%') ORDER BY name";
+    	String sql = "SELECT * FROM tea where name like '%" + name + "%' ORDER BY name";
         try {
             connection= connectionHelper.getConnection();
             Statement s = connection.createStatement();
@@ -64,7 +64,7 @@ public class TeaDAO {
         PreparedStatement ps = null;
         try {
         	 connection= connectionHelper.getConnection();
-            ps = connection.prepareStatement("INSERT INTO tea (name, grapes, country, year, create_time) VALUES (?, ?, ?, ?, ?)",
+            ps = connection.prepareStatement("INSERT INTO tea (name, grapes, country, year, create_time, region) VALUES (?, ?, ?, ?, ?, ?)",
                new String[] { "ID" });
          //   ps = connection.prepareStatement("INSERT INTO tea (name, grapes, country, year) VALUES (?, ?, ?, ?)");
             ps.setString(1, tea.getName());
@@ -72,6 +72,7 @@ public class TeaDAO {
             ps.setString(3, tea.getCountry());
             ps.setString(4, tea.getYear());
             ps.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+	    ps.setString(6, tea.getRegion());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
@@ -92,12 +93,13 @@ public class TeaDAO {
         PreparedStatement ps = null;
         try {
         	 connection= connectionHelper.getConnection();
-            ps = connection.prepareStatement("update tea set name = ?, grapes = ?, country = ?, year = ? where id = ?");
+            ps = connection.prepareStatement("update tea set name = ?, grapes = ?, country = ?, year = ?, region = ? where id = ?");
             ps.setString(1, tea.getName());
             ps.setString(2, tea.getGrapes());
             ps.setString(3, tea.getCountry());
             ps.setString(4, tea.getYear());
-            ps.setInt(5, tea.getId());
+	    ps.setString(5, tea.getRegion());
+            ps.setInt(6, tea.getId());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,6 +137,7 @@ public class TeaDAO {
         tea.setGrapes(rs.getString("grapes"));
         tea.setCountry(rs.getString("country"));
         tea.setYear(rs.getString("year"));
+        tea.setRegion(rs.getString("region"));
         tea.setCreateTime(rs.getTimestamp("create_time"));
         return tea;
     }
