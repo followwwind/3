@@ -17,6 +17,8 @@ public class Tea {
     private String country;
     
     private String year;
+
+    private String region;
     
     private Date createTime;
    
@@ -58,6 +60,14 @@ public class Tea {
 
 	public void setYear(String year) {
 		this.year = year;
+	}
+	
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
 	}
 
 	public Date getCreateTime() {
