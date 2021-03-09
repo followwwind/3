@@ -6,11 +6,11 @@ var currentTea;
 var isAdd = true;
 
 var search =function() {
-	var searchKey = $("#name").val();
+	var searchKey = $("#searchName").val();
 	if (searchKey == '') 
 		findAll();
 	else
-		findByName(searchKey);
+		findAll(searchKey);
 };
 
 var newTea=function () {
@@ -19,10 +19,12 @@ var newTea=function () {
 	renderDetails(currentTea); // Display empty form
 };
 
-var findAll=function() {
+var findAll=function(searchKey) {
 	console.log('findAll');
-	$.ajax({type: 'GET',url: rootURL,dataType: "json", success: renderList
-	});
+	var json = {
+	   "name": searchKey
+	};
+	$.ajax({type: 'POST',url: rootURL + "/list",dataType: "json", contentType: 'application/json',data: JSON.stringify(json), success: renderList});
 };
 
 var findByName= function(searchKey) {
@@ -74,8 +76,9 @@ var addTea = function () {
 		data: formToJSON(),
 		success: function(data, textStatus, jqXHR){
 			alert('Tea created successfully');
-			$('#btnDelete').show();
-			$('#teaId').val(data.id);
+			//$('#btnDelete').show();
+			//$('#teaId').val(data.id);
+			$("#add").modal("hide");
                         findAll();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
@@ -94,7 +97,8 @@ var updateTea= function () {
 		data: formToJSON(),
 		success: function(data, textStatus, jqXHR){
 			alert('Tea updated successfully');
-            findAll();
+			$("#add").modal("hide");
+                        findAll();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			alert('updateTea error: ' + textStatus);
@@ -102,14 +106,17 @@ var updateTea= function () {
 	});
 };
 
-var deleteTea=function() {
+var deleteTea=function(id) {
 	console.log('deleteTea');
 	$.ajax({
 		type: 'DELETE',
 		url: rootURL + '/',
+		contentType: 'application/json',
+		dataType: "json",
+		data: JSON.stringify({"id": id}),
 		success: function(data, textStatus, jqXHR){
 			alert('Tea deleted successfully');
-            findAll();
+                        findAll();
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			alert('deleteTea error');
@@ -121,26 +128,37 @@ var renderList= function(list) {
 	// JAX-RS serializes an empty list as null, and a 'collection of one' as an object (not an 'array of one')
 	//var list = data == null ? [] : (data instanceof Array ? data : [data]);
    // var list=data.tea;
-	$('#teaList li').remove();
+	//$('#teaList li').remove();
+	$('#tbody').html('');
 	$.each(list, function(index, tea) {
-		$('#teaList').append('<li><a href="#" id="' + tea.id + '">'+tea.name+'</a></li>');
+		var tr = "<tr>";
+		tr += "<td>" + tea.name + "</td>"
+		tr += "<td>" + tea.grapes + "</td>"
+		tr += "<td>" + tea.country + "</td>"
+		tr += "<td>" + tea.region + "</td>"
+		tr += "<td>" + tea.year + "</td>"
+		tr += "<td><button class='btn btn-info' onclick='renderDetails(" + JSON.stringify(tea) + ")'>Edit</button><button class='btn btn-danger' onclick='deleteTea(" + tea.id + ")'>Edit</button></td>"
+		tr += "</tr>"
+		$('#tbody').append(tr);
 	});
 };
 
 var renderDetails=function(tea) {
-	$('#teaId').val(tea.id);
+	isAdd = false;
+	$('#id').val(tea.id);
 	$('#name').val(tea.name);
 	$('#grapes').val(tea.grapes);
 	$('#country').val(tea.country);
 	$('#region').val(tea.region);
 	$('#year').val(tea.year);
-	$('#pic').attr('src', 'pics/' + tea.picture);
-	$('#description').val(tea.description);
+	$("#add").modal("show");
+	//$('#pic').attr('src', 'pics/' + tea.picture);
+	//$('#description').val(tea.description);
 };
 
 // Helper function to serialize all the form fields into a JSON string
 var formToJSON=function () {
-	var teaId = $('#teaId').val();
+	var teaId = $('#id').val();
 	return JSON.stringify({
 		"id": teaId == "" ? null : teaId, 
 		"name": $('#name').val(), 
@@ -148,8 +166,8 @@ var formToJSON=function () {
 		"country": $('#country').val(),
 		"region": $('#region').val(),
 		"year": $('#year').val(),
-		"picture": currentTea.picture,
-		"description": $('#description').val()
+		//"picture": currentTea.picture,
+		//"description": $('#description').val()
 		});
 };
 
