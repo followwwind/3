@@ -28,7 +28,8 @@ public class TeaResource {
 	public TeaDAO teaDao = new TeaDAO(conHelper);
 	CheckVintageExists checkVintageExists = new CheckVintageExists();
 
-	@GET
+	@POST
+	@Path("/list")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response findAll(Tea tea) {
 		System.out.println("invoking GET");
@@ -48,6 +49,9 @@ public class TeaResource {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response create(Tea tea) {
 		Response response;
+		teaDao.create(tea);
+		response = Response.status(200).entity(tea).build();
+		/**
 		try {
 			List<Tea> teas = teaDao.findAll();
 			teaValidator.validateTea(tea);
@@ -62,6 +66,7 @@ public class TeaResource {
 		ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
 		response = Response.status(403).entity(errorMessage).build();
 	}
+	**/
 		return response;
 	}
 	
