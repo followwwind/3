@@ -10,18 +10,18 @@ result_sign = []
 
 def get_bid(chipsLeft):
     try:
-        count = int(input("出价多少芯片(1-%d)" % chipsLeft))
+        count = int(input("How many chips to bid(1-%d)?" % chipsLeft))
         if count <= chipsLeft and count > 0:
             return count
     except:
         pass
-    print("无效的芯片数量")
+    print("Invalid number of chips")
     return get_bid(chipsLeft)
         
 
 def display_details():
     global i
-    print("比赛次数:%d" % (index - i))
+    print("Rounds of game played:%d" % (index - i))
     win = 0
     lose = 0
     size = len(result)
@@ -30,28 +30,28 @@ def display_details():
         sign = result_sign[i]
         notice = ""
         if not sign:
-            notice = "你输了"
+            notice = "you lost"
             lose += 1
         else: 
-            notice = "你赢了"
+            notice = "you won"
             win += 1
-        print("第%d轮:你出价%d个筹码," % (i + 1, ele) + notice)
-    print(("赢几轮:%d,输几轮:%d,胜率:%.2f" % (win, lose, win/size * 100)) + "%," + notice)
-    print("剩余芯片:%d" % now_total)
-    print("谢谢你的参与")
+        print("Round %d:You bid %d chips and " % (i + 1, ele) + notice)
+    print(("Round won:%d/Round lost:%d,Winning rate:%.1f" % (win, lose, win/size * 100)) + "%," + notice)
+    print("Number of choice left:%d" % now_total)
+    print("Thank you for playing")
     
 def get_choice():
-    choice = input("左还是右[l, r]")
+    choice = input("Left or Right[l, r]")
     if choice == "l" or choice == "r":
         return choice
-    print("无效的选择!")
+    print("Invalid choice!")
     return get_choice()
     
 def get_yn():
-    choice = input("继续玩[y, n]")
+    choice = input("Continue playing[y, n]")
     if choice == "y" or choice == "n":
         return choice
-    print("无效的选择!")
+    print("Invalid choice!")
     return get_yn()
     
 def play_dodge():
@@ -61,19 +61,22 @@ def play_dodge():
     while i > 0:
         count = get_bid(now_total)
         choice = get_choice()
-        print("你选择了:" + choice)
+        print("You chose:" + choice)
         computer = choice_arr[random.randint(0, 1)]
-        print("计算机选择了:" + computer)
+        print("Computer chose:" + computer)
         result.append(count)
         if computer != choice:
-            print("你输了")
+            print("You lose!")
             now_total -= count
             result_sign.append(False)
         else: 
-            print("你赢了")
+            print("You win!")
             now_total += count
             result_sign.append(True)
-        print("你现在有%d个筹码" % now_total)
+        if now_total == 1:
+            print("You now have only one chip left!")
+        else:
+            print("You now have %d chips" % now_total)
         i = i -1
         if i == 0:
             display_details()
@@ -82,6 +85,7 @@ def play_dodge():
         if yn == "n":
             display_details()
             break
+        print("You are biding one last chip!")
         
 if __name__ == '__main__':
     play_dodge()
